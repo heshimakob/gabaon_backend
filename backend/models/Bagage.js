@@ -5,8 +5,8 @@ const BagageSchema = new Schema({
     reservation: { type: Schema.Types.ObjectId, ref: 'Reservation' },
     poids: Number,
     dimensions: String,
-    type: { type: String, enum: ['carry-on', 'checked'] },
-    status: { type: String, enum: ['checked-in', 'loaded', 'lost', 'found'] },
+    type: { type: String, enum: ['bagage main', 'verifier'] },
+    status: { type: String, enum: ['enregistrer', 'chargee', 'perdu', 'trouver'] },
     checkInDate: { type: Date, default: Date.now },
     
 });
