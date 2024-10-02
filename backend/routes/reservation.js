@@ -107,6 +107,7 @@
 const express = require('express');
 const router = express.Router();
 const QRCode = require('qrcode');
+const cron = require('node-cron');
 const Reservation = require('../models/Reservation');
 const Vole = require('../models/Vole');
 const User = require('../models/User');
@@ -212,6 +213,29 @@ router.get('/status/:reservationId', async (req, res) => {
         res.status(400).json('Error: ' + err);
     }
 });
+
+
+// Planifier une tâche cron pour annuler les réservations après 24 heures
+cron.schedule('0 * * * *', async () => {
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    try {
+        const reservationsToCancel = await Reservation.find({
+            reservationDate: { $lt: twentyFourHoursAgo },
+            status: 'reserver'
+        });
+
+        for (const reservation of reservationsToCancel) {
+            reservation.status = 'annule';
+            await reservation.save();
+        }
+        console.log(`Annulé ${reservationsToCancel.length} réservations dépassant 24 heures.`);
+    } catch (err) {
+        console.error('Erreur lors de l\'annulation des réservations: ', err);
+    }
+});
+
 
 module.exports = router;
 

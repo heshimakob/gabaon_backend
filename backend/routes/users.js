@@ -74,12 +74,17 @@ const Reservation = require('../models/Reservation');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+
+
+
+
+
 // Route pour enregistrer un nouvel utilisateur
 router.post('/register', async (req, res) => {
     const { name, email, password, role } = req.body;
 
     try {
-        const user = new User({ name, email, password, role });
+        const user = new User({ name, email, password, role});
         await user.save();
         res.status(201).json({ message: 'Utilisateur enregistré avec succès' });
     } catch (err) {
@@ -140,11 +145,11 @@ router.get('/allUser', async (req, res) => {
 });
 
 // Route pour générer le manifeste des vols
-router.get('/manifest/:flightId', async (req, res) => {
-    const { flightId } = req.params;
+router.get('/manifest/:voleId', async (req, res) => {
+    const { voleId } = req.params;
 
     try {
-        const manifest = await Reservation.find({ flight: flightId }).populate('user', 'name email');
+        const manifest = await Reservation.find({ vole: voleId }).populate('user', 'name email');
         if (!manifest) {
             return res.status(404).json('Aucune réservation trouvée pour ce vol');
         }
