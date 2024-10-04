@@ -37,6 +37,16 @@ router.get('/', async (req, res) => {
         res.status(400).json('Error: ' + err);
     }
 });
+router.get('/origins-destinations', async (req, res) => {
+    try {
+      const vols = await Vole.find().select('origin destination -_id');
+      const origins = [...new Set(vols.map(vol => vol.origin))];
+      const destinations = [...new Set(vols.map(vol => vol.destination))];
+      res.json({ origins, destinations });
+    } catch (err) {
+      res.status(400).json('Error: ' + err);
+    }
+  });
 
 // Rechercher un vol
 router.get('/search', async (req, res) => {

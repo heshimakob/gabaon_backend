@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
-app.use('/api/vole', require('./routes/vole'));
+app.use('/api/embarquement', require('./routes/embarquement'));
 
 app.use('/api/users', require('./routes/users'));
 app.use('/api/vole', require('./routes/vole'));

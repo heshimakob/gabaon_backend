@@ -2,11 +2,22 @@ const express = require('express');
 const router = express.Router();
 const Reservation = require('../models/Reservation');
 const Bagage = require('../models/Bagage');
+const QRCode = require('qrcode');
 
+
+
+router.get('/all', async (req, res) => {
+    try {
+        const bagages = await Bagage.find().populate('reservation'); // Populate si vous voulez aussi récupérer les détails de la réservation
+        res.json(bagages);
+    } catch (err) {
+        res.status(400).json('Error: ' + err);
+    }
+});
 // Enregistrer les bagages
 router.post('/checkin-baggage', async (req, res) => {
     try {
-        const { reservationId, weight, dimensions, type } = req.body;
+        const { reservationId, poids, dimensions, type } = req.body;
         const reservation = await Reservation.findById(reservationId);
 
         if (!reservation) {
@@ -15,10 +26,10 @@ router.post('/checkin-baggage', async (req, res) => {
 
         const newBagage = new Bagage({
             reservation: reservation._id,
-            weight,
+            poids,
             dimensions,
             type,
-            status: 'checked-in'
+            status: 'enregistrer'
         });
 
         await newBagage.save();
@@ -52,7 +63,10 @@ router.get('/embarquement-carte/:reservationId', async (req, res) => {
             bagages: reservation.bagages
         };
 
-        res.json(embarquementCarte);
+        // Génération du QR code
+        const qrCodeUrl = await QRCode.toDataURL(JSON.stringify(embarquementCarte));
+
+        res.json({ ...embarquementCarte, qrCodeUrl });
     } catch (err) {
         res.status(400).json('Error: ' + err);
     }

@@ -9,6 +9,17 @@ const VoleSchema = new Schema({
     date: Date,
     typeAvion: String,
     capacite: Number,
+    poidEco: Number,
+    poidFirst: Number,
+    poidsBusiness: Number,
+    fareEco:Number,
+    fareFirst:Number,
+    fareBusiness:Number,
+    taxeTouristique:Number,
+    rqTaxe:Number,
+    rsTaxe:Number,
+    rvTaxe:Number,
+    tvTaxe:Number,
     prix: Number,
 });
 
