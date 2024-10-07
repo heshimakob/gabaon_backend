@@ -1,43 +1,45 @@
-// src/components/BoardingPass.jsx
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// BoardingPassPDF.jsx
+import React from 'react';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
-const BoardingPass = ({ reservationId }) => {
-  const [boardingPass, setBoardingPass] = useState(null);
+const styles = StyleSheet.create({
+  page: {
+    padding: 30,
+  },
+  section: {
+    marginBottom: 10,
+  },
+  heading: {
+    fontSize: 20,
+    marginBottom: 10,
+    fontWeight: 'bold',
+  },
+  text: {
+    fontSize: 12,
+  },
+});
 
-  useEffect(() => {
-    const fetchBoardingPass = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/embarquement/embarquement-carte/${reservationId}`);
-        setBoardingPass(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    fetchBoardingPass();
-  }, [reservationId]);
-
-  if (!boardingPass) {
-    return <p>Chargement...</p>;
-  }
-
-  return (
-    <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">Carte d'Embarquement</h2>
-      <p><strong>PNR:</strong> {boardingPass.PNR}</p>
-      <p><strong>Vol:</strong> {boardingPass.vole.origin} - {boardingPass.vole.destination}</p>
-      <p><strong>Passager:</strong> {boardingPass.user.name}</p>
-      <p><strong>Portique:</strong> {boardingPass.gate}</p>
-      <p><strong>Siège:</strong> {boardingPass.seat}</p>
-      <h3 className="mt-4">Bagages</h3>
-      <ul>
-        {boardingPass.bagages.map(baggage => (
-          <li key={baggage._id}>{baggage.type} - {baggage.dimensions} - {baggage.poids} kg</li>
+const BoardingPassPDF = ({ reservation }) => (
+  <Document>
+    <Page style={styles.page}>
+      <View style={styles.section}>
+        <Text style={styles.heading}>Carte d'Embarquement</Text>
+        <Text style={styles.text}><strong>PNR:</strong> {reservation.PNR}</Text>
+        <Text style={styles.text}><strong>Vol:</strong> {reservation.vole.origin} - {reservation.vole.destination}</Text>
+        <Text style={styles.text}><strong>Passager:</strong> {reservation.user.name}</Text>
+        <Text style={styles.text}><strong>Portique:</strong> {reservation.gate}</Text>
+        <Text style={styles.text}><strong>Siège:</strong> {reservation.seat}</Text>
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.heading}>Bagages</Text>
+        {reservation.bagages.map(baggage => (
+          <Text style={styles.text} key={baggage._id}>
+            {baggage.type} - {baggage.dimensions} - {baggage.poids} kg
+          </Text>
         ))}
-      </ul>
-    </div>
-  );
-};
+      </View>
+    </Page>
+  </Document>
+);
 
-export default BoardingPass;
+export default BoardingPassPDF;

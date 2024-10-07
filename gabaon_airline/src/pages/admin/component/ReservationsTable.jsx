@@ -83,14 +83,76 @@ const ReservationsTable = () => {
             <Document>
               <Page size="A6">
                 <View style={styles.section}>
-                  <Text>PNR: {selectedReservation.ticket.PNR}</Text>
-                  <Text>Origine: {selectedReservation.ticket.vole.origin}</Text>
-                  <Text>Email: {selectedReservation.ticket.vole.email}</Text>
-                  <Text>Destination: {selectedReservation.ticket.vole.destination}</Text>
-                  <Text>Date: {selectedReservation.ticket.vole.date}</Text>
-                  <Text>Statut: {selectedReservation.ticket.status}</Text>
-                  <Text>Type de billet: {selectedReservation.ticket.ticketType}</Text>
-                  <QRCodeCanvas value={JSON.stringify(selectedReservation.ticket)} />
+                  <View style={styles.header}>
+                    <Text style={styles.companyName}>Gabaon Airline</Text>
+                    <Text style={styles.companyAddress}>Rd Congo Goma commune de goma</Text>
+                  </View>
+                  <View style={styles.table}>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>PNR</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.PNR}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>Origine</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.vole.origin}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>Email</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.vole.email}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>Destination</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.vole.destination}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>Date</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.vole.date}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>Statut</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.status}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>Type de billet</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>{selectedReservation.ticket.ticketType}</Text>
+                      </View>
+                    </View>
+                    <View style={styles.tableRow}>
+                      <View style={styles.tableCol}>
+                        <Text style={styles.tableCell}>QR Code</Text>
+                      </View>
+                      <View style={styles.tableCol}>
+                        <QRCodeCanvas value={JSON.stringify(selectedReservation.ticket)} />
+                      </View>
+                    </View>
+                  </View>
                 </View>
               </Page>
             </Document>
@@ -106,7 +168,42 @@ const ReservationsTable = () => {
 };
 
 const styles = StyleSheet.create({
-  section: { margin: 10, padding: 10, flexGrow: 1 }
+  section: { 
+    margin: 10, 
+    padding: 10, 
+    flexGrow: 1 
+  },
+  header: {
+    marginBottom: 20,
+  },
+  companyName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  companyAddress: {
+    fontSize: 12,
+  },
+  table: {
+    display: 'table',
+    width: 'auto',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  tableRow: {
+    flexDirection: 'row',
+  },
+  tableCol: {
+    width: '50%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
+  },
+  tableCell: {
+    margin: 5,
+  },
 });
 
 export default ReservationsTable;

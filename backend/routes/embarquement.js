@@ -4,8 +4,7 @@ const Reservation = require('../models/Reservation');
 const Bagage = require('../models/Bagage');
 const QRCode = require('qrcode');
 
-
-
+// Récupérer tous les bagages
 router.get('/all', async (req, res) => {
     try {
         const bagages = await Bagage.find().populate('reservation'); // Populate si vous voulez aussi récupérer les détails de la réservation
@@ -14,6 +13,7 @@ router.get('/all', async (req, res) => {
         res.status(400).json('Error: ' + err);
     }
 });
+
 // Enregistrer les bagages
 router.post('/checkin-baggage', async (req, res) => {
     try {

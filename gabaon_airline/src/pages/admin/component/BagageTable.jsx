@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import QRCode from 'qrcode.react';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { FaPrint, FaEdit } from 'react-icons/fa';
-import BoardingPassPDF from './BoardingPassPDF'; // Composant pour générer le PDF
+import BoardingPassPDF from './BoardingPassPDF'; // Import du composant PDF
 
 const BagageTable = () => {
     const [bagages, setBagages] = useState([]);
@@ -39,16 +38,16 @@ const BagageTable = () => {
                 <tbody>
                     {bagages.map(bagage => (
                         <tr key={bagage._id}>
-                            <td className="border px-4 py-2">{bagage.reservation}</td>
+                            <td className="border px-4 py-2">{bagage.reservation._id}</td>
                             <td className="border px-4 py-2">{bagage.poids}</td>
                             <td className="border px-4 py-2">{bagage.dimensions}</td>
                             <td className="border px-4 py-2">{bagage.type}</td>
                             <td className="border px-4 py-2">{bagage.status}</td>
                             <td className="border px-4 py-2">
-                                {/* <QRCode value={bagage._id} size={50} /> */}
+                                {/* QRCode component can be used here */}
                             </td>
                             <td className="border px-4 py-2">
-                                <button onClick={() => handlePrint(bagage.reservation)}>
+                                <button onClick={() => handlePrint(bagage.reservation._id)}>
                                     <FaPrint />
                                 </button>
                                 {/* Ajouter ici le bouton pour changer le statut */}

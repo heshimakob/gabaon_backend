@@ -23,7 +23,10 @@ const ReservationSchema = new Schema({
     vole: { type: Schema.Types.ObjectId, ref: 'Vole', required: true },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     bookingDate: { type: Date, default: Date.now },
-    status: { type: String, enum: ['reserver', 'payer', 'annuler', 'attente'] },
+    status: { type: String, enum: ['reserver', 'payer', 'annuler', 'attente','non chaud'] },
+
+
+    //avec penalite, 72 heure avant vole pas de penalite , le 72 est comptbiliser  les de l'emission du billet
     ticketType: { type: String, enum: ['economie', 'business', 'first'] },
     ticket: { type: String, enum: ['aller-simple', 'aller-retour'] },
     PNR: String,
